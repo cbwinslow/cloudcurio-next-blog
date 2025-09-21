@@ -19,3 +19,17 @@
 ## Worker
 - Run `scripts/cloudcurio_worker_install.sh` on cbwdellr720 with ZeroTier network ID.
 - Set `CONTAINER_IMAGE=ghcr.io/<you>/cloudcurio-review:latest`.
+
+## Testing
+1. Run unit tests: `npm run test`
+2. Run tests with coverage: `npm run test:coverage`
+3. Run Python worker tests: `npm run test:worker` or `bash scripts/run-worker-tests.sh`
+4. Run linting: `npm run lint`
+5. Run type checking: `npm run type-check`
+
+For CI/CD, GitHub Actions workflows are configured in `.github/workflows/`:
+- `ci.yml`: Runs on pull requests and pushes to main/master branches
+- `run-tests.yml`: Runs unit tests
+- `code-coverage.yml`: Runs tests with coverage reporting
+- `python-worker-tests.yml`: Runs Python worker tests
+- `publish-container.yml`: Publishes container to GHCR

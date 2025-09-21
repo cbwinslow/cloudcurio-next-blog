@@ -70,4 +70,11 @@ journalctl -u cloudcurio-worker -f
 - Set `.env.local` values: `STRIPE_SECRET_KEY`, `STRIPE_PRICE_PRO`
 - Add webhook endpoint to Stripe: `https://yourdomain/api/stripe/webhook` and set `STRIPE_WEBHOOK_SECRET`
 
+### 10) Testing
+- Run unit tests: `npm run test`
+- Run tests with coverage: `npm run test:coverage`
+- Run Python worker tests: `npm run test:worker`
+- Run linting: `npm run lint`
+- Run type checking: `npm run type-check`
+
 See `docs/SETUP.md` and `docs/COMPLIANCE.md` for details.
