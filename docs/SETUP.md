@@ -33,3 +33,19 @@ For CI/CD, GitHub Actions workflows are configured in `.github/workflows/`:
 - `code-coverage.yml`: Runs tests with coverage reporting
 - `python-worker-tests.yml`: Runs Python worker tests
 - `publish-container.yml`: Publishes container to GHCR
+- `deploy-cloudflare.yml`: Deploys to CloudFlare Pages
+
+## CloudFlare Deployment
+
+To deploy to CloudFlare Pages:
+
+1. Set up the required secrets in your GitHub repository:
+   - `CLOUDFLARE_API_TOKEN`
+   - `CLOUDFLARE_ACCOUNT_ID`
+   - `GITHUB_TOKEN`
+
+2. Configure environment variables in CloudFlare Pages project settings (see `docs/CLOUDFLARE_DEPLOYMENT.md`)
+
+3. Push to the main branch to trigger automatic deployment
+
+See `docs/CLOUDFLARE_DEPLOYMENT.md` for detailed instructions.

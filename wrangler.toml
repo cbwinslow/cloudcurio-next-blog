@@ -1,0 +1,13 @@
+name = "cloudcurio-blog"
+main = ".next/worker.js"
+compatibility_date = "2023-12-01"
+
+[site]
+bucket = ".next"
+
+[build]
+command = "npm run build"
+watch_dir = ".next"
+
+[vars]
+NEXT_PUBLIC_APP_URL = "https://cloudcurio.cc"

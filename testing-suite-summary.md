@@ -36,12 +36,20 @@ This document summarizes all the files created and modified to implement an adva
 3. `.github/workflows/ci.yml` - Continuous integration workflow
 4. `.github/workflows/python-worker-tests.yml` - Workflow to run Python worker tests
 
+## CloudFlare Deployment
+1. `wrangler.toml` - CloudFlare Workers configuration
+2. `cloudflare.json` - CloudFlare Pages build configuration
+3. `docs/CLOUDFLARE_DEPLOYMENT.md` - Environment variables and deployment instructions
+4. `docs/CLOUDFLARE_PROJECT_SETUP.md` - Step-by-step project setup guide
+5. `.github/workflows/deploy-cloudflare.yml` - Workflow to deploy to CloudFlare Pages
+6. `cloudflare-deployment-summary.md` - Summary of CloudFlare deployment configuration
+
 ## Files Modified
 
 ### Configuration
 1. `package.json` - Added test scripts and dependencies
 2. `README.md` - Updated with testing instructions
-3. `docs/SETUP.md` - Updated with testing setup instructions
+3. `docs/SETUP.md` - Updated with testing and CloudFlare deployment instructions
 
 ### Code
 1. `lib/utils.ts` - Created utility functions for testing
@@ -69,3 +77,4 @@ This implementation provides a comprehensive testing suite for the CloudCurio pr
 - GitHub Actions workflows for CI/CD
 - Local testing scripts
 - Comprehensive documentation
+- CloudFlare Pages deployment configuration
