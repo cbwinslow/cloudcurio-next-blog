@@ -71,7 +71,7 @@ To create a GitHub personal access token:
 3. Give the token a descriptive name
 4. Select the `repo` scope (this is required for managing repository secrets)
 5. Click "Generate token"
-6. Copy the generated token (you won't see it again)
+6. Copy the generated token
 
 ## CloudFlare Credentials
 
@@ -114,6 +114,16 @@ To verify that secrets have been added successfully:
 1. Go to your GitHub repository
 2. Navigate to Settings > Secrets and variables > Actions
 3. You should see the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets listed
+
+## Bitwarden Integration
+
+This repository also includes scripts for extracting secrets from Bitwarden and managing them locally:
+
+1. **Bitwarden Extraction**: `scripts/extract-bitwarden-secrets.sh`
+2. **Local Secret Management**: `scripts/setup-local-secrets.sh`
+3. **GitHub Deployment**: `scripts/push-secrets-to-github.sh`
+
+See `BITWARDEN_SECRET_WORKFLOW.md` for complete documentation on this workflow.
 
 ## Next Steps
 
