@@ -35,7 +35,46 @@ These variables should be set in the CloudFlare Pages project settings:
 
 ## Setting Secrets in GitHub
 
+You can set the required secrets in GitHub either manually or programmatically:
+
+### Manual Method
+
 1. Go to your GitHub repository settings
 2. Navigate to Secrets and variables > Actions
 3. Click "New repository secret"
 4. Add each required secret with its corresponding value
+
+### Programmatic Method
+
+This repository includes scripts to programmatically add secrets to GitHub:
+
+1. Ensure you have Python 3 and pip installed
+2. Set your GitHub personal access token as an environment variable:
+   ```bash
+   export GITHUB_TOKEN=your_github_token
+   ```
+3. Run the setup script:
+   ```bash
+   ./scripts/setup-cloudflare-secrets.sh
+   ```
+4. When prompted, enter your CloudFlare API token and Account ID
+
+The script will install required dependencies and add the necessary secrets to your repository.
+
+## GitHub Personal Access Token
+
+To create a GitHub personal access token:
+
+1. Go to https://github.com/settings/tokens
+2. Click "Generate new token (classic)"
+3. Select the `repo` scope
+4. Generate the token and copy it
+
+## CloudFlare API Token
+
+To get your CloudFlare API token and account ID:
+
+1. Log in to your CloudFlare dashboard
+2. Go to User Profile > API Tokens
+3. Create a token with appropriate permissions for Pages
+4. Your Account ID is available on the dashboard overview

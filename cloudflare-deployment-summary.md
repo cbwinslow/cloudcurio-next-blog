@@ -15,6 +15,11 @@ This document summarizes all the files and configurations added to enable CloudF
 ### GitHub Actions Workflows
 1. `.github/workflows/deploy-cloudflare.yml` - Workflow to deploy to CloudFlare Pages
 
+### Automation Scripts
+1. `scripts/add-github-secret.py` - Python script to programmatically add secrets to GitHub
+2. `scripts/setup-cloudflare-secrets.sh` - Shell script to automate secret setup
+3. `scripts/README.md` - Documentation for the automation scripts
+
 ## Files Modified
 1. `docs/SETUP.md` - Updated with CloudFlare deployment instructions
 
@@ -74,6 +79,21 @@ To set up the CloudFlare Pages project:
 4. Set up environment variables as documented in CLOUDFLARE_DEPLOYMENT.md
 5. Configure custom domain (cloudcurio.cc)
 6. Set up GitHub secrets as documented in CLOUDFLARE_DEPLOYMENT.md
+
+## Automated Secret Setup
+
+This repository includes scripts to programmatically add secrets to GitHub:
+
+1. Ensure you have Python 3 and pip installed
+2. Set your GitHub personal access token as an environment variable:
+   ```bash
+   export GITHUB_TOKEN=your_github_token
+   ```
+3. Run the setup script:
+   ```bash
+   ./scripts/setup-cloudflare-secrets.sh
+   ```
+4. When prompted, enter your CloudFlare API token and Account ID
 
 ## Troubleshooting
 
