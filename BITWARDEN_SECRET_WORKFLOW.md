@@ -174,6 +174,56 @@ To verify secrets are properly set up:
    - Go to GitHub repository Settings > Secrets and variables > Actions
    - Verify `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are present
 
+## Fully Automated Setup Using Bitwarden API Keys
+
+For complete automation, you can use Bitwarden API keys to generate all secrets programmatically:
+
+### Prerequisites
+
+- Bitwarden CLI (`bw`) and `jq` installed
+- Python 3 and pip installed
+- Bitwarden API credentials (Client ID and Client Secret)
+
+### Setup Process
+
+1. **Get Bitwarden API Credentials**:
+   - Go to Bitwarden web app
+   - Settings → Security → Keys
+   - Click "View API Key"
+   - Copy Client ID and Client Secret
+
+2. **Set Environment Variables**:
+   ```bash
+   export BW_CLIENTID=your_client_id
+   export BW_CLIENTSECRET=your_client_secret
+   ```
+
+3. **Run Fully Automated Setup**:
+   ```bash
+   ./scripts/fully-automated-setup.sh
+   ```
+
+This single command will:
+1. Generate 12 secure secrets for CloudCurio
+2. Store all secrets in your Bitwarden vault
+3. Extract secrets to local secure storage
+4. Set up local secret management system
+5. Push deployment secrets to GitHub
+
+### Individual Automation Scripts
+
+You can also run individual automation steps:
+
+1. **Generate and Store Secrets**:
+   ```bash
+   ./scripts/generate-bitwarden-secrets.sh
+   ```
+
+2. **Run Complete Workflow** (after generating secrets):
+   ```bash
+   ./scripts/fully-automated-setup.sh --skip-generation
+   ```
+
 ## Automation
 
 For automated workflows, you can combine these scripts:
@@ -182,25 +232,12 @@ For automated workflows, you can combine these scripts:
 #!/bin/bash
 # Fully automated secret setup
 
-# Login to Bitwarden (for automated environments)
+# Set Bitwarden API credentials
 export BW_CLIENTID=your_client_id
 export BW_CLIENTSECRET=your_client_secret
-bw login --apikey
 
-# Unlock vault (you might need to handle master password differently in automation)
-export BW_SESSION=$(bw unlock --raw)
-
-# Extract secrets
-./scripts/extract-bitwarden-secrets.sh --save-local
-
-# Load secrets
-source ~/.config/cloudcurio/load-secrets.sh
-
-# Push to GitHub
-./scripts/push-secrets-to-github.sh
-
-# Clean up
-bw lock
+# Run complete automated setup
+./scripts/fully-automated-setup.sh
 ```
 
 This workflow provides a secure, automated way to manage secrets from Bitwarden through local development to GitHub deployment.
