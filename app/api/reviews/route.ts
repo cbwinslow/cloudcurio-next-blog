@@ -7,7 +7,7 @@ export async function POST(req: Request){
   const session = await getServerSession(authOptions);
   if(!session || (session.user as any)?.role !== 'admin') return NextResponse.json({ error:'Forbidden' }, { status: 403 });
   const { repoUrl, klass='quick' } = await req.json();
-  const job = await prisma.reviewJob.create({ data: { repoUrl, meta: { class: klass } } });
+  const job = await prisma.reviewJob.create({ data: { repoUrl, meta: JSON.stringify({ class: klass }) } });
   return NextResponse.json({ job });
 }
 export async function GET(){

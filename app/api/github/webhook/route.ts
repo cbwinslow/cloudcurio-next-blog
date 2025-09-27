@@ -17,7 +17,7 @@ export async function POST(req: Request){
     const action = evt.action;
     if(['opened','synchronize','reopened'].includes(action)){
       const repoUrl = evt.pull_request?.html_url || evt.repository?.html_url;
-      const job = await prisma.reviewJob.create({ data: { repoUrl, status: 'queued', meta: { provider: 'github', pr: evt.pull_request?.number, class: 'quick' } } });
+      const job = await prisma.reviewJob.create({ data: { repoUrl, status: 'queued', meta: JSON.stringify({ provider: 'github', pr: evt.pull_request?.number, class: 'quick' }) } });
       return NextResponse.json({ ok:true, job });
     }
   }

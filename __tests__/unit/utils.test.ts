@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 import { formatCurrency, formatDate } from "@/lib/utils";
 
 describe("Utils", () => {

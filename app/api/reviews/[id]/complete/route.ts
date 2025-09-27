@@ -11,7 +11,9 @@ async function emit(event: string, payload: any){
     if(phKey){
       await fetch(`${phHost}/capture/`, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ api_key: phKey, event, properties: payload }) });
     }
-  }catch{}
+  } catch (e) {
+    console.error('Failed to emit event', e);
+  }
 }
 export async function POST(req: Request, { params }:{ params:{ id: string } }){
   const token = process.env.WORKER_TOKEN ?? '';
@@ -20,7 +22,7 @@ export async function POST(req: Request, { params }:{ params:{ id: string } }){
   if(content){
     await prisma.reviewArtifact.upsert({ where: { jobId: params.id }, create: { jobId: params.id, content }, update: { content } });
   }
-  const job = await prisma.reviewJob.update({ where: { id: params.id }, data: { status: status ?? 'done', resultUrl: `/reviews/${params.id}`, meta: { ...(error ? { error } : {}), gpu } } });
+  const job = await prisma.reviewJob.update({ where: { id: params.id }, data: { status: status ?? 'done', resultUrl: `/reviews/${params.id}`, meta: JSON.stringify({ ...(error ? { error } : {}), gpu }) } });
   await emit('review.complete', { id: job.id, status: job.status, gpu, error: error ?? null });
   return NextResponse.json({ ok: true });
 }

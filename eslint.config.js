@@ -10,7 +10,8 @@ export default tseslint.config(
       '.next/',
       'out/',
       'coverage/',
-      'jest.config.js'
+      'jest.config.cjs',
+      'next.config.cjs'
     ],
   },
   {
