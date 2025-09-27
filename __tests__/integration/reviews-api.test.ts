@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 import { createTestUser, createTestReviewJob, cleanupTestData } from '../testHelpers';
 import testPrisma from '../testDb';
 
@@ -77,7 +80,8 @@ describe('Reviews API', () => {
       expect(response.status).toBe(200);
       expect(data.job).toBeDefined();
       expect(data.job.repoUrl).toBe('https://github.com/test/repo');
-      expect(data.job.meta.class).toBe('quick');
+      const meta = JSON.parse(data.job.meta);
+      expect(meta.class).toBe('quick');
     });
   });
 });

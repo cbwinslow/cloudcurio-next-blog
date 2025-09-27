@@ -82,7 +82,7 @@ model UsageEvent {
   kind      String
   tokensIn  Int      @default(0)
   tokensOut Int      @default(0)
-  meta      Json?
+  meta      String?
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
   @@index([userId, kind, createdAt])
@@ -122,7 +122,7 @@ model ReviewJob {
   repoUrl   String
   status    String   @default("queued")
   resultUrl String?
-  meta      Json?
+  meta      String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   artifact  ReviewArtifact?

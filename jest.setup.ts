@@ -1,3 +1,8 @@
+import { TextEncoder, TextDecoder } from "util";
+// @ts-ignore
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder as any;
+
 import "@testing-library/jest-dom";
 import "@testing-library/jest-dom/jest-globals";
 
