@@ -1,6 +1,21 @@
 import { prisma } from '@/lib/db';
+
 export default async function Dotfiles(){
-  const items = await prisma.script.findMany({ where: { channel: 'dotfile' }, orderBy: { updatedAt:'desc' } });
+  // Handle build time when database is not available
+  if (!prisma) {
+    return (
+      <main className="max-w-4xl mx-auto p-6">
+        <h1 className="text-3xl font-bold mb-4">Dotfiles</h1>
+        <p className="text-gray-600">Dotfiles will be available after deployment.</p>
+      </main>
+    );
+  }
+
+  const items = await prisma.script.findMany({ 
+    where: { channel: 'dotfile' }, 
+    orderBy: { updatedAt:'desc' } 
+  });
+  
   return (
     <main className="max-w-4xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4">Dotfiles</h1>

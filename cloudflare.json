@@ -1,7 +1,7 @@
 {
   "build": {
-    "command": "npm run build",
-    "publish": ".next"
+    "command": "npm run build:cloudflare",
+    "publish": ".vercel/output/static"
   },
   "env": {
     "NODE_VERSION": "18"
