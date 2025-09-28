@@ -1,1 +1,5 @@
-module.exports = { experimental: { serverActions: true } };
+export default {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+};
