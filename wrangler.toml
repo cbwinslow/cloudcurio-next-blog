@@ -1,13 +1,16 @@
 name = "cloudcurio-blog"
-main = ".next/worker.js"
-compatibility_date = "2023-12-01"
+compatibility_date = "2024-09-01"
+compatibility_flags = ["nodejs_compat"]
 
-[site]
-bucket = ".next"
+# Configuration for Cloudflare Pages
+pages_build_output_dir = ".next"
 
 [build]
 command = "npm run build"
-watch_dir = ".next"
 
-[vars]
+[env.production.vars]
+NODE_ENV = "production"
 NEXT_PUBLIC_APP_URL = "https://cloudcurio.cc"
+
+[env.preview.vars]
+NODE_ENV = "preview"

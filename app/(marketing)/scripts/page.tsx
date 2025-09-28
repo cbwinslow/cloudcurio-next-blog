@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { prisma } from '@/lib/db';
 export const dynamic = 'force-dynamic';
 export default async function ScriptsIndex(){
-  const scripts = await prisma.script.findMany({ orderBy: { updatedAt: 'desc' } });
+  const scripts = prisma ? await prisma.script.findMany({ orderBy: { updatedAt: 'desc' } }) : [];
   return (
     <main className="max-w-4xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4">Scripts & Installers</h1>

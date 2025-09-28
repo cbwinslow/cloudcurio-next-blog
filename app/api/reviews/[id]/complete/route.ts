@@ -11,7 +11,9 @@ async function emit(event: string, payload: any){
     if(phKey){
       await fetch(`${phHost}/capture/`, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ api_key: phKey, event, properties: payload }) });
     }
-  }catch{}
+  }catch{
+    // Silently ignore analytics failures
+  }
 }
 export async function POST(req: Request, { params }:{ params:{ id: string } }){
   const token = process.env.WORKER_TOKEN ?? '';

@@ -5,10 +5,17 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 export const runtime = 'nodejs';
 export async function GET(){
+  if (!prisma) {
+    return NextResponse.json({ scripts: [] });
+  }
   const all = await prisma.script.findMany({ orderBy: { updatedAt:'desc' } });
   return NextResponse.json({ scripts: all });
 }
 export async function POST(req: Request){
+  if (!prisma) {
+    return NextResponse.json({ error: "Service unavailable" }, { status: 503 });
+  }
+  
   const session = await getServerSession(authOptions);
   if(!session || (session.user as any)?.role !== 'admin'){
     return NextResponse.json({ error:'Forbidden' }, { status: 403 });
