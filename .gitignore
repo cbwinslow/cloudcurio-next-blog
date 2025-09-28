@@ -9,6 +9,9 @@ pnpm-lock.yaml
 yarn.lock
 package-lock.json
 
+# Vercel
+.vercel
+
 # Env
 .env
 .env.*.local
