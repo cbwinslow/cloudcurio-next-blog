@@ -48,4 +48,15 @@ To deploy to CloudFlare Pages:
 
 3. Push to the main branch to trigger automatic deployment
 
+### Using Wrangler CLI
+
+You can also deploy manually using the Wrangler CLI:
+
+1. Install Wrangler: `npm install -g wrangler`
+2. Login to Cloudflare: `wrangler auth login`
+3. Build the application: `npm run build`
+4. Deploy using: `wrangler pages deploy .next --project-name=cloudcurio-blog`
+
+The `wrangler.toml` file is properly configured for Cloudflare Pages deployment with the correct build output directory and environment variables.
+
 See `docs/CLOUDFLARE_DEPLOYMENT.md` for detailed instructions.

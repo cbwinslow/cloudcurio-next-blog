@@ -5,7 +5,7 @@ This document summarizes all the files and configurations added to enable CloudF
 ## Files Created
 
 ### Configuration Files
-1. `wrangler.toml` - CloudFlare Workers configuration
+1. `wrangler.toml` - CloudFlare Pages configuration with proper build settings and environment variables
 2. `cloudflare.json` - CloudFlare Pages build configuration
 
 ### Documentation
