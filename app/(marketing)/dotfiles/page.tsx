@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/db';
 export default async function Dotfiles(){
-  const items = await prisma.script.findMany({ where: { channel: 'dotfile' }, orderBy: { updatedAt:'desc' } });
+  const items = prisma ? await prisma.script.findMany({ where: { channel: 'dotfile' }, orderBy: { updatedAt:'desc' } }) : [];
   return (
     <main className="max-w-4xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4">Dotfiles</h1>

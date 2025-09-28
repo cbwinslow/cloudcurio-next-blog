@@ -3,6 +3,10 @@ import { stripe } from "@/lib/stripe";
 import { prisma } from "@/lib/db";
 export const runtime = "nodejs";
 export async function POST(req: Request){
+  if (!stripe || !prisma) {
+    return new NextResponse("Service unavailable", { status: 503 });
+  }
+  
   const sig = req.headers.get("stripe-signature");
   const raw = await req.text();
   let event;

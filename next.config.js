@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = { 
-  experimental: { 
-    serverActions: true 
-  },
-  output: 'export',
+  // Remove output: 'export' to allow for server functions in Cloudflare Pages
   trailingSlash: true,
   images: {
     unoptimized: true

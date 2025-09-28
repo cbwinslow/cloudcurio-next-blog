@@ -10,7 +10,8 @@ export default tseslint.config(
       '.next/',
       'out/',
       'coverage/',
-      'jest.config.js'
+      'jest.config.cjs',
+      '**/*.config.js'
     ],
   },
   {
@@ -19,6 +20,7 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
+      'no-empty': ['error', { 'allowEmptyCatch': true }]
     },
   }
 );
