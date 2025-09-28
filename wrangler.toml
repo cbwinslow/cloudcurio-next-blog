@@ -1,13 +1,12 @@
 name = "cloudcurio-blog"
-main = ".next/worker.js"
-compatibility_date = "2023-12-01"
+compatibility_date = "2024-09-23"
 
-[site]
-bucket = ".next"
-
-[build]
-command = "npm run build"
-watch_dir = ".next"
-
-[vars]
+# Environment variables for production
+[env.production]
 NEXT_PUBLIC_APP_URL = "https://cloudcurio.cc"
+
+# Build configuration  
+[[build]]
+command = "npm run build"
+cwd = "."
+environment = { NODE_VERSION = "18" }

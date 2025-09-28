@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+
 export const runtime = 'nodejs';
+
 export async function GET(_: Request, { params }: { params: { slug: string } }){
+  if (!prisma) {
+    return new NextResponse('Service unavailable', { status: 503 });
+  }
+
   const rec = await prisma.script.findUnique({ where: { slug: params.slug } });
   if(!rec) return new NextResponse('Not found', { status: 404 });
   await prisma.script.update({ where: { slug: params.slug }, data: { downloads: { increment: 1 } } });

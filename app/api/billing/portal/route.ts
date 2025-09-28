@@ -3,8 +3,14 @@ import { stripe } from "@/lib/stripe";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
+
 export const runtime = 'nodejs';
+
 export async function POST(){
+  if (!stripe || !prisma) {
+    return NextResponse.json({ error: "service-unavailable" }, { status: 503 });
+  }
+
   const session = await getServerSession(authOptions);
   if(!session?.user?.email) return NextResponse.json({ error: "unauth" }, { status: 401 });
   const user = await prisma.user.findUnique({ where: { email: session.user.email } });

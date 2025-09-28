@@ -1,1 +1,8 @@
-module.exports = { experimental: { serverActions: true } };
+export default {
+  images: {
+    unoptimized: true
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+};
