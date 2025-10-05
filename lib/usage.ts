@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/db";
 import { PLAN_LIMITS, getUserPlan } from "@/lib/entitlements";
 export async function recordUsage(userId: string, kind: string, tokensIn=0, tokensOut=0, meta: any=null){
-  await prisma.usageEvent.create({ data: { userId, kind, tokensIn, tokensOut, meta } });
+  const metaJson = meta ? JSON.stringify(meta) : null;
+  await prisma.usageEvent.create({ data: { userId, kind, tokensIn, tokensOut, meta: metaJson } });
 }
 export async function checkQuota(userId: string){
   const plan = await getUserPlan(userId);

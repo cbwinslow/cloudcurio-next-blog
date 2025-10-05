@@ -1,6 +1,8 @@
-import { prisma } from '@/lib/db';
+import getPrismaInstance from '@/lib/db';
 import { notFound } from 'next/navigation';
+
 export default async function ReviewPage({ params }:{ params:{ id:string } }){
+  const prisma = getPrismaInstance();
   const art = await prisma.reviewArtifact.findUnique({ where: { jobId: params.id }, include: { job: true } });
   if(!art) return notFound();
   return (

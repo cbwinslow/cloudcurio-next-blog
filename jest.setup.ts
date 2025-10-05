@@ -1,5 +1,4 @@
 import "@testing-library/jest-dom";
-import "@testing-library/jest-dom/jest-globals";
 
 // Mock Next.js router
 jest.mock("next/router", () => ({
@@ -37,7 +36,8 @@ jest.mock("next-auth/react", () => ({
 
 // Mock environment variables
 process.env.NEXT_PUBLIC_APP_URL = "http://localhost:3000";
-process.env.TEST_DATABASE_URL = "postgresql://test:test@localhost:5432/test";
+process.env.TEST_DATABASE_URL = "file:./test.db";
+process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
 process.env.NEXTAUTH_SECRET = "test-secret";
 process.env.GITHUB_ID = "test-github-id";
 process.env.GITHUB_SECRET = "test-github-secret";

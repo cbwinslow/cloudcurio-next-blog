@@ -22,3 +22,7 @@ prisma/dev.db-journal
 .DS_Store
 .idea/
 .vscode/
+
+# Test databases
+*.db
+*.db-journal

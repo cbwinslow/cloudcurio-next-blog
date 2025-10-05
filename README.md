@@ -1,80 +1,94 @@
-# CloudCurio – Full Monorepo (Final)
+# CloudCurio – Deployed on Cloudflare
 
-This repo bundles the complete CloudCurio stack so you can push to GitHub and run:
+This repository contains the full CloudCurio application, now re-architected for a serverless deployment on the Cloudflare platform. The new architecture leverages Cloudflare Pages for the frontend, Cloudflare Workers for serverless functions, and Cloudflare D1 for the database.
 
-- **Next.js app** (landing, blog stub, scripts CDN with raw endpoints, GitHub/GitLab webhooks, reviews UI, auth via GitHub, Stripe billing, gated chatbot)
-- **Prisma** schema for Auth + Billing + Usage + Scripts + Reviews
-- **GPU Review Worker v2** (parallel across RTX 3060, K80:0, K80:1, K40) + systemd unit
-- **Analysis Container** (GHCR-ready Dockerfile + runner)
-- **Installer** for cbwdellr720 (ZeroTier + Docker + NVIDIA Container Toolkit + worker)
-- **Docs** for setup and compliance
-- **Archive** of older versions and the enhanced landing template
-- **Logos** under `public/logos/` (from your uploaded images)
+## Key Components
 
-## Quick Start
+- **Next.js App**: A modern web application providing the user interface, API routes, and authentication.
+- **Prisma**: The ORM used to interact with the Cloudflare D1 database.
+- **Cloudflare Worker**: A serverless function that processes code reviews asynchronously.
+- **Cloudflare D1**: A serverless SQL database that stores all application data.
+- **Cloudflare Queues**: A messaging service for communication between the main app and the review worker.
 
-### 0) Prereqs
-- Node 18+ and **pnpm** (or npm)
-- Docker (for container build/publish)
-- SQLite (dev) or Postgres (prod)
-- On **cbwdellr720**: NVIDIA drivers + ZeroTier
+## Getting Started
 
-### 1) Configure app
-```bash
-cp .env.example .env.local
-```
+### Prerequisites
 
-### 2) Install deps & DB
-```bash
-pnpm i
-pnpm prisma generate
-pnpm db:push
-```
+- Node.js 18+ and pnpm (or npm)
+- A Cloudflare account
+- Wrangler CLI (for interacting with Cloudflare services)
 
-### 3) Run app
-```bash
-pnpm dev
-# http://localhost:3000
-```
+### Local Development
 
-### 4) Scripts CDN
-- Visit `/admin/scripts` and create a script (e.g., slug `bootstrap`).
-- Usage on a fresh machine:
-  ```bash
-  curl -fsSL https://yourdomain/raw/scripts/bootstrap | bash
-  ```
+1.  **Clone the repository**:
+    ```bash
+    git clone <repository-url>
+    cd <repository-name>
+    ```
 
-### 5) Container to GHCR
-- The workflow under `.github/workflows/publish-container.yml` pushes:
-  `ghcr.io/<your-github-username-or-org>/cloudcurio-review:latest`
-- On push to `main` (changes under `container/`), it builds & publishes automatically.
+2.  **Install dependencies**:
+    ```bash
+    pnpm install
+    ```
 
-### 6) Worker on cbwdellr720
-```bash
-sudo bash scripts/cloudcurio_worker_install.sh   --api-base https://cloudcurio.cc   --worker-token "<STRONG_TOKEN>"   --zt-net <YOUR_ZEROTIER_NETWORK_ID>   --container-image ghcr.io/<you>/cloudcurio-review:latest   --gpu-mapping '{"rtx3060":"0","k80:0":"1","k80:1":"2","k40":"3"}'   --gpu-classes '{"rtx3060":"quick","k80:0":"heavy","k80:1":"heavy","k40":"legacy"}'
-# Logs:
-journalctl -u cloudcurio-worker -f
-```
+3.  **Configure environment variables**:
+    Copy the `.env.example` file to `.env.local` and fill in the required values for your local setup.
+    ```bash
+    cp .env.example .env.local
+    ```
 
-### 7) Webhooks
-- **GitHub** → Settings → Webhooks → URL: `https://yourdomain/api/github/webhook` (secret: `GITHUB_WEBHOOK_SECRET`)
-- **GitLab** → Webhooks → URL: `https://yourdomain/api/gitlab/webhook` (token: `GITLAB_WEBHOOK_TOKEN`)
+4.  **Set up the local database**:
+    ```bash
+    pnpm prisma generate
+    pnpm db:push
+    ```
 
-### 8) Auth (GitHub)
-- Create a GitHub OAuth app:
-  - Callback URL: `https://yourdomain/api/auth/callback/github`
-- Set `GITHUB_ID`, `GITHUB_SECRET`, `NEXTAUTH_SECRET`
+5.  **Run the development server**:
+    ```bash
+    pnpm dev
+    ```
+    The application will be available at `http://localhost:3000`.
 
-### 9) Billing (Stripe)
-- Create Product + Price (Pro)
-- Set `.env.local` values: `STRIPE_SECRET_KEY`, `STRIPE_PRICE_PRO`
-- Add webhook endpoint to Stripe: `https://yourdomain/api/stripe/webhook` and set `STRIPE_WEBHOOK_SECRET`
+## Deployment
 
-### 10) Testing
-- Run unit tests: `npm run test`
-- Run tests with coverage: `npm run test:coverage`
-- Run Python worker tests: `npm run test:worker`
-- Run linting: `npm run lint`
-- Run type checking: `npm run type-check`
+This application is designed to be deployed on Cloudflare.
 
-See `docs/SETUP.md` and `docs/COMPLIANCE.md` for details.
+1.  **Deploy the D1 Database**:
+    Use the Wrangler CLI to deploy the database schema.
+    ```bash
+    npx wrangler d1 migrations apply cloudcurio-db --local
+    npx wrangler d1 migrations apply cloudcurio-db --remote
+    ```
+
+2.  **Deploy the Review Worker**:
+    Navigate to the `worker` directory and deploy the consumer worker.
+    ```bash
+    cd worker
+    npx wrangler deploy
+    cd ..
+    ```
+
+3.  **Deploy the Next.js App**:
+    Connect your GitHub repository to Cloudflare Pages and configure the build settings. The application will be deployed automatically on pushes to the `main` branch.
+
+### Webhooks
+
+-   **GitHub**: Go to your repository's settings, add a webhook with the URL `https://yourdomain/api/github/webhook`, and set the `GITHUB_WEBHOOK_SECRET`.
+-   **GitLab**: Add a webhook with the URL `https://yourdomain/api/gitlab/webhook` and set the `GITLAB_WEBHOOK_TOKEN`.
+
+### Authentication (GitHub)
+
+-   Create a GitHub OAuth app with the callback URL `https://yourdomain/api/auth/callback/github`.
+-   Set `GITHUB_ID`, `GITHUB_SECRET`, and `NEXTAUTH_SECRET` in your environment variables.
+
+### Billing (Stripe)
+
+-   Create a new product and price in your Stripe account.
+-   Set `STRIPE_SECRET_KEY` and `STRIPE_PRICE_PRO` in your environment variables.
+-   Add a webhook endpoint in Stripe with the URL `https://yourdomain/api/stripe/webhook` and set `STRIPE_WEBHOOK_SECRET`.
+
+### Testing
+
+-   Run unit tests: `npm run test`
+-   Run linting: `npm run lint`
+-   Run type checking: `npm run type-check`

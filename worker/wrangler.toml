@@ -1,0 +1,13 @@
+name = "review-consumer"
+main = "review-consumer.ts"
+compatibility_date = "2024-03-20"
+node_compat = true
+
+[vars]
+GITHUB_TOKEN = "placeholder"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "cloudcurio-db"
+database_id = "a6429a18-5683-4c92-9014-25a6e433c6b2"
+preview_database_id = "cloudcurio-db-preview"

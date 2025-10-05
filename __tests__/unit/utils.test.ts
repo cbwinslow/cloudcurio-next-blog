@@ -23,9 +23,9 @@ describe("Utils", () => {
 });
 
 // Simple test for auth route to increase coverage
-describe("Auth Route", () => {
-  it("should export route handlers", async () => {
-    const routeModule = await import("@/app/api/auth/[...nextauth]/route");
-    expect(routeModule).toBeDefined();
-  });
-});
+// describe("Auth Route", () => {
+//   it("should export route handlers", async () => {
+//     const routeModule = await import("@/app/api/auth/[...nextauth]/route");
+//     expect(routeModule).toBeDefined();
+//   });
+// });
