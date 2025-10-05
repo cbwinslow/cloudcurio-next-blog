@@ -1,5 +1,7 @@
-import { prisma } from '@/lib/db';
+import getPrismaInstance from '@/lib/db';
+
 export default async function Dotfiles(){
+  const prisma = getPrismaInstance();
   const items = await prisma.script.findMany({ where: { channel: 'dotfile' }, orderBy: { updatedAt:'desc' } });
   return (
     <main className="max-w-4xl mx-auto p-6">

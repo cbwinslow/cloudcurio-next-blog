@@ -1,13 +1,31 @@
-name = "cloudcurio-blog"
+name = "cloudcurio"
 main = ".next/worker.js"
-compatibility_date = "2023-12-01"
+compatibility_date = "2024-03-20"
 
 [site]
 bucket = ".next"
 
 [build]
 command = "npm run build"
-watch_dir = ".next"
 
 [vars]
 NEXT_PUBLIC_APP_URL = "https://cloudcurio.cc"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "cloudcurio-db"
+database_id = "a6429a18-5683-4c92-9014-25a6e433c6b2"
+preview_database_id = "cloudcurio-db-preview"
+
+[[queues.producers]]
+queue = "reviews-queue"
+binding = "REVIEWS_QUEUE"
+
+[workers]
+[[workers.consumers]]
+queue = "reviews-queue"
+worker = "review-consumer"
+max_batch_size = 1
+max_wait_time_ms = 5000
+failed_consumer = "dead-letter-queue"
+dead_letter_queue = "reviews-dlq"

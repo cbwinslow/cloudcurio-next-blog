@@ -1,6 +1,6 @@
 module.exports = {
   preset: "ts-jest",
-  testEnvironment: "jest-environment-jsdom",
+  testEnvironment: "node",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1",
@@ -18,13 +18,5 @@ module.exports = {
   transformIgnorePatterns: [
     "/node_modules/(?!(jose|@panva/hkdf|uuid|openid-client|next-auth))"
   ],
-  collectCoverageFrom: [
-    "app/**/*.{ts,tsx}",
-    "lib/**/*.{ts,tsx}",
-    "!app/**/*.d.ts",
-    "!app/**/page.tsx",
-    "!app/**/layout.tsx"
-  ],
-  coverageDirectory: "coverage",
-  coverageReporters: ["json", "lcov", "text", "clover"]
+  moduleDirectories: ["node_modules", "<rootDir>"],
 };

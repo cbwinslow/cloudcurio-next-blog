@@ -1,7 +1,9 @@
 import Link from 'next/link';
-import { prisma } from '@/lib/db';
+import getPrismaInstance from '@/lib/db';
 export const dynamic = 'force-dynamic';
+
 export default async function ScriptsIndex(){
+  const prisma = getPrismaInstance();
   const scripts = await prisma.script.findMany({ orderBy: { updatedAt: 'desc' } });
   return (
     <main className="max-w-4xl mx-auto p-6">
